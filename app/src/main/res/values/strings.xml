@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Book A Bus</string>
+
+    <string name="to">To</string>
+    <string name="from">From</string>
+    <string name="to_msg">Enter start point</string>
+    <string name="from_msg">Enter end point</string>
+    <string name="search_string">Search</string>
+</resources>
