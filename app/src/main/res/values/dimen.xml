@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="to_from_box_height">40dp</dimen>
+    <dimen name="start_end_margin">24dp</dimen>
+    <dimen name="top_margin">40dp</dimen>
+
+    <dimen name="description_size">20sp</dimen>
+    <dimen name="edit_msg_size">18sp</dimen>
+</resources>
