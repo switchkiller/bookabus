@@ -2,6 +2,7 @@ package com.develop.everest.bookabus;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,10 @@ public class Result extends AppCompatActivity {
     public void AddData(){
         btn_Add.setOnClickListener( new View.OnClickListener(){
             public void onClick(View v){
+                if (TextUtils.isEmpty(Dest.getText().toString()) || TextUtils.isEmpty(Src.getText().toString()) || TextUtils.isEmpty(Name.getText().toString()) || TextUtils.isEmpty(Time.getText().toString()) || TextUtils.isEmpty(Price.getText().toString())){
+                    Toast.makeText(Result.this,"Error",Toast.LENGTH_LONG).show();
+                    return;
+                }
                 boolean isInserted = my_db.insertData(Dest.getText().toString(),
                         Src.getText().toString(),
                         Name.getText().toString(),
@@ -40,6 +45,11 @@ public class Result extends AppCompatActivity {
                 else
                     Toast.makeText(Result.this,"Error",Toast.LENGTH_LONG).show();
 
+                Dest.setText("");
+                Src.setText("");
+                Name.setText("");
+                Time.setText("");
+                Price.setText("");
             }
         });
     }
