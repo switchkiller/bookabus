@@ -2,6 +2,7 @@ package com.develop.everest.bookabus;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 public class Result extends AppCompatActivity {
     private static final String URL_PRODUCTS = "http://192.168.1.7/MyApi/Api.php";
     private static final String TAG = "Result";
+
+    private static final int VERTICAL_ITEM_SPACE = 48;
     ArrayList<Bus> BusList;
     RecyclerView recycleView;
 
@@ -28,9 +31,21 @@ public class Result extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        recycleView = (RecyclerView) findViewById(R.id.recylcerView);
-        RequestQueue queue = Volley.newRequestQueue(this);
+
+        // Recycler View
+        recycleView = findViewById(R.id.recylcerView);
+        recycleView.setLayoutManager(new LinearLayoutManager(this));
+        // Adding decoration to recyclerview
+//        recycleView.addItemDecoration(new VerticalSpaceItemDecoration(VERTICAL_ITEM_SPACE));
+        recycleView.addItemDecoration(new DividerItemDecoration(this));
+
+        // Define Array list of Bus. We will feed it to adapter. Then adapter will feed it to recycler view
         BusList = new ArrayList<>();
+
+        //Use volley for handling new JSON request
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        // Method to handle JSON response
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
                 new Response.Listener<String>() {
                     @Override
@@ -62,13 +77,22 @@ public class Result extends AppCompatActivity {
                 Log.v(TAG, "Received an exception");
             }
         });
-        BusList.add(new Bus(1,"Dharan", "Kathmandu","Barun","NZM",1234.00));
-        BusList.add(new Bus(2,"Dharan", "Kathmandu","Barun","NZM",1234.00));
-        BusList.add(new Bus(3,"Dharan", "Kathmandu","Barun","NZM",1234.00));
-        BusList.add(new Bus(4,"Dharan", "Kathmandu","Barun","NZM",1234.00));
-        BusList.add(new Bus(5,"Dharan", "Kathmandu","Barun","NZM",1234.00));
+
+
+        // Dummy Data
+        BusList.add(new Bus(1,"Lajpat Nagar", "Nehru Place","Praveen Travels","NZM",1234.00));
+        BusList.add(new Bus(2,"Kathmandu", "Dharan","Praveen Travels","NZM",1234.00));
+        BusList.add(new Bus(3,"Ilam", "Kakarbita","Praveen Travels","NZM",1234.00));
+        BusList.add(new Bus(4,"Kakarbita", "Kathmandu","Praveen Travels","NZM",1234.00));
+        BusList.add(new Bus(5,"Dharan", "Kakarbita","Praveen Travels","NZM",1234.00));
+
+        // Passing BusList to BusAdapter
         BusAdapter adapter = new BusAdapter(Result.this, BusList);
+
+        // BusAdapter supplies data to RecyclerView
         recycleView.setAdapter(adapter);
+
+        // Volley makes operation in queue
         queue.add(stringRequest);
     }
 }

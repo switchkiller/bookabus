@@ -7,7 +7,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:layout_marginStart="@dimen/start_end_margin"
+            android:layout_marginEnd="@dimen/start_end_margin">
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,13 +40,6 @@
                 android:textStyle="bold"
                 android:id="@+id/BusName"/>
 
-            <!--  <TextView
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:text="A/C Sleeper (2+2)"
-                  android:textColor="#8a8a8a"
-                  android:id="@+id/BusType"
-                  android:layout_below="@+id/BusName"/> -->
 
               <TextView
                   android:layout_width="match_parent"
@@ -55,14 +50,6 @@
                   android:textStyle="bold"
                   android:id="@+id/Price"/>
 
-            <!--  <TextView
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_below="@+id/Price"
-                  android:text="3.30 Hour"
-                  android:textAlignment="textEnd"
-                  android:textColor="#b3b3b3"
-                  android:id="@+id/Duration"/> -->
-
           </RelativeLayout>
+
   </LinearLayout>
