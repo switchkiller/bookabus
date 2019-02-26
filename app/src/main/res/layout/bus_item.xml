@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:id="@+id/Source"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Source"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:id="@+id/Destination"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Destination"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:id="@+id/Timestamp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Timestamp"
+                android:textColor="#4b4b4b"
+                android:textStyle="bold"
+                android:id="@+id/BusName"/>
+
+            <!--  <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="A/C Sleeper (2+2)"
+                  android:textColor="#8a8a8a"
+                  android:id="@+id/BusType"
+                  android:layout_below="@+id/BusName"/> -->
+
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:textAlignment="textEnd"
+                  android:textColor="#f5a622"
+                  android:textSize="24sp"
+                  android:textStyle="bold"
+                  android:id="@+id/Price"/>
+
+            <!--  <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@+id/Price"
+                  android:text="3.30 Hour"
+                  android:textAlignment="textEnd"
+                  android:textColor="#b3b3b3"
+                  android:id="@+id/Duration"/> -->
+
+          </RelativeLayout>
+  </LinearLayout>

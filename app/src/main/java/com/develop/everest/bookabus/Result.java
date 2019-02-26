@@ -2,56 +2,73 @@ package com.develop.everest.bookabus;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
-import com.develop.everest.bookabus.Database.DBhelper;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Result extends AppCompatActivity {
-    DBhelper my_db;
-    EditText Dest,Src,Name,Time,Price;
-    Button btn_Add;
+    private static final String URL_PRODUCTS = "http://192.168.1.7/MyApi/Api.php";
+    private static final String TAG = "Result";
+    ArrayList<Bus> BusList;
+    RecyclerView recycleView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        my_db = new DBhelper(this);
-        Dest = (EditText)findViewById(R.id.Destination);
-        Src = (EditText)findViewById(R.id.Source);
-        Name = (EditText)findViewById(R.id.Name);
-        Time = (EditText)findViewById(R.id.Time);
-        Price = (EditText)findViewById(R.id.Price);
-        btn_Add = (Button)findViewById(R.id.Add);
-        AddData();
-    }
+        recycleView = (RecyclerView) findViewById(R.id.recylcerView);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        BusList = new ArrayList<>();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_PRODUCTS,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONArray array = new JSONArray(response);
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject Bus = array.getJSONObject(i);
+                                BusList.add(new Bus(
+                                        Bus.getInt("id"),
+                                        Bus.getString("dest_to"),
+                                        Bus.getString("dest_from"),
+                                        Bus.getString("name"),
+                                        Bus.getString("departure"),
+                                        Bus.getDouble("price")
+                                ));
+                            }
+                            BusAdapter adapter = new BusAdapter(Result.this, BusList);
+                            recycleView.setAdapter(adapter);
+                            Log.v(TAG, "Data inserted");
 
-    public void AddData(){
-        btn_Add.setOnClickListener( new View.OnClickListener(){
-            public void onClick(View v){
-                if (TextUtils.isEmpty(Dest.getText().toString()) || TextUtils.isEmpty(Src.getText().toString()) || TextUtils.isEmpty(Name.getText().toString()) || TextUtils.isEmpty(Time.getText().toString()) || TextUtils.isEmpty(Price.getText().toString())){
-                    Toast.makeText(Result.this,"Error",Toast.LENGTH_LONG).show();
-                    return;
-                }
-                boolean isInserted = my_db.insertData(Dest.getText().toString(),
-                        Src.getText().toString(),
-                        Name.getText().toString(),
-                        Time.getText().toString(),
-                        Price.getText().toString());
-                if( isInserted == true)
-                    Toast.makeText(Result.this,"Data Inserted",Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(Result.this,"Error",Toast.LENGTH_LONG).show();
-
-                Dest.setText("");
-                Src.setText("");
-                Name.setText("");
-                Time.setText("");
-                Price.setText("");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v(TAG, "Received an exception");
             }
         });
+        BusList.add(new Bus(1,"Dharan", "Kathmandu","Barun","NZM",1234.00));
+        BusList.add(new Bus(2,"Dharan", "Kathmandu","Barun","NZM",1234.00));
+        BusList.add(new Bus(3,"Dharan", "Kathmandu","Barun","NZM",1234.00));
+        BusList.add(new Bus(4,"Dharan", "Kathmandu","Barun","NZM",1234.00));
+        BusList.add(new Bus(5,"Dharan", "Kathmandu","Barun","NZM",1234.00));
+        BusAdapter adapter = new BusAdapter(Result.this, BusList);
+        recycleView.setAdapter(adapter);
+        queue.add(stringRequest);
     }
-
 }
